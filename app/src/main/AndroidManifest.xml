@@ -16,22 +16,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:authorities="uy.edu.ucu.android.tramitesuy"
+            android:name=".provider.ProceedingsProvider"
+            android:exported="true"
+            android:enabled="true"
+            android:multiprocess="true"></provider>
+        <service
+            android:name=".controller.MyIntentService"
+            android:exported="false" />
         <receiver
             android:name=".controller.MyBroadcastReceiver"
-            android:label="@string/title_activity_my_broadcast_receiver"
+            android:exported="@string/title_activity_my_broadcast_receiver"
             android:parentActivityName=".controller.Login" >
-            <meta-
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uy.edu.ucu.android.tramitesuy.controller.Login" />
+            <intent-filter>
+                <action android:name="uy.edu.ucu.android.servicedemo.service.receiver.PROGRESS" />
+                <action android:name="uy.edu.ucu.android.servicedemo.service.receiver.FINISHED" />
+            </intent-filter>
         </receiver>
-        <activity
-            android:name=".controller.MyIntentService"
-            android:label="@string/title_activity_my_intent_service"
-            android:parentActivityName=".controller.Login" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="uy.edu.ucu.android.tramitesuy.controller.Login" />
-        </activity>
         <activity
             android:name=".controller.ResultsActivity"
             android:label="@string/title_activity_results"

@@ -18,11 +18,13 @@ public class Login extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        try {
-            Utils.loadProceedings(Login.this);
-        }catch (Exception e){
-            // Print
-        }
+        runIntentService();
+
+        //try {
+        //    Utils.loadProceedings(Login.this);
+        //}catch (Exception e){
+        //    // Print
+        //}
 
     }
 
@@ -49,7 +51,7 @@ public class Login extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void runIntentService(View view) {
+    public void runIntentService() {
 
         Intent serviceIntent = new Intent(this, MyIntentService.class);
         startService(serviceIntent);

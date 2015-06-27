@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import uy.edu.ucu.android.tramitesuy.R;
+import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
+import uy.edu.ucu.android.tramitesuy.util.Utils;
 
 public class MyIntentService extends IntentService {
 
@@ -49,36 +52,9 @@ public class MyIntentService extends IntentService {
 
         int result;
 
-        File output = new File(Environment.getExternalStorageDirectory(),
-                FILE_NAME);
-        if (output.exists()) {
-            output.delete();
-        }
-
-        HttpURLConnection connection;
-        InputStream stream = null;
-        FileOutputStream fos = null;
         try {
-
-            URL url = new URL(FILE_URL);
-            connection = (HttpURLConnection) url.openConnection();
-            stream = connection.getInputStream();
-            // input stream to read file - with 8k buffer
-            InputStream input = new BufferedInputStream(stream, 8192);
-            byte data[] = new byte[1024];
-            fos = new FileOutputStream(output.getPath());
-            int next;
-            int fileSize = connection.getContentLength();
-            long downloaded = 0;
             publishProgress(0);
-            while ((next = input.read(data)) != -1) {
-                downloaded += next;
-                if(downloaded % 5 == 0){
-                    publishProgress((int)(downloaded * 100) / fileSize);
-                }
-                fos.write(data, 0, next);
-            }
-
+            Utils.loadProceedings(getApplicationContext());
             result = Activity.RESULT_OK;
 
         } catch (Exception e) {
@@ -86,20 +62,7 @@ public class MyIntentService extends IntentService {
 
             result = Activity.RESULT_CANCELED;
         } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+
         }
 
         publishResults(result);
@@ -110,7 +73,7 @@ public class MyIntentService extends IntentService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setContentTitle("Download in progress")
+        mBuilder.setContentTitle("Cargando trámites...")
                 .setContentText(progress + " % downloaded")
                 .setProgress(100, progress, false)
                 .setSmallIcon(R.mipmap.ic_launcher);
@@ -122,14 +85,22 @@ public class MyIntentService extends IntentService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setContentTitle("Download finished")
+        mBuilder.setContentTitle("Carga finalizada")
                 .setAutoCancel(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, ResultsActivity.class), 0));
         if(result == Activity.RESULT_OK)
-            mBuilder.setContentText("Download complete");
+            mBuilder.setContentText("Carga completa");
         else
-            mBuilder.setContentText("Download failed");
+            mBuilder.setContentText("Error en la carga");
+
+//        // checking if category already exists
+//        Cursor categoryCursor = context.getContentResolver().query(
+//                ProceedingsContract.CategoryEntry.build....,
+//                null,
+//                null,
+//                null,
+//                null);
 
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
