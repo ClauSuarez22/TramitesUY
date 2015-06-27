@@ -5,7 +5,9 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import uy.edu.ucu.android.tramitesuy.data.ProceedingsOpenHelper;
 
@@ -95,8 +97,32 @@ public class ProceedingsProvider extends ContentProvider {
     @Override
     public Cursor query(Uri uri, String[] projection, String selection,
                         String[] selectionArgs, String sortOrder) {
-        //TODO: implementar las queries que sean necesarias en su app de acuerdo a lo visto en clase
-        throw new UnsupportedOperationException("Not yet implemented");
+
+        SQLiteDatabase db = mOpenHelper.getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        switch (mUriMatcher.match(uri)) {
+            case PROCEEDING:
+                qb.setTables(ProceedingsContract.ProceedingEntry.TABLE_NAME);
+                //qb.appendWhere( mOpenHelper.COLUMN_ID + " = " + uri.getPathSegments().get(1))
+                break;
+            case CATEGORY:
+                qb.setTables(ProceedingsContract.CategoryEntry.TABLE_NAME);
+                break;
+            case LOCATION:
+                qb.setTables(ProceedingsContract.LocationEntry.TABLE_NAME);
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown URI " + uri);
+        }
+
+        if (TextUtils.isEmpty(sortOrder)) sortOrder = "_ID ASC";
+
+        Cursor c = qb.query(db, projection, selection, selectionArgs, null,
+                null, sortOrder);
+        c.setNotificationUri(getContext().getContentResolver(), uri);
+
+        return c;
     }
 
 
