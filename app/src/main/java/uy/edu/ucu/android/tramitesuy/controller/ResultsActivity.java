@@ -1,34 +1,24 @@
-package uy.edu.ucu.android.tramitesuy;
+package uy.edu.ucu.android.tramitesuy.controller;
 
-import android.content.ContentResolver;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import uy.edu.ucu.android.tramitesuy.util.Utils;
+import uy.edu.ucu.android.tramitesuy.R;
 
-
-public class Login extends ActionBarActivity {
+public class ResultsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
-        try {
-            Utils.loadProceedings(Login.this);
-        }catch (Exception e){
-            // Print
-        }
-
+        setContentView(R.layout.activity_results);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_results, menu);
         return true;
     }
 

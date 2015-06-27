@@ -8,13 +8,37 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".Login"
+            android:name=".controller.Login"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <receiver
+            android:name=".controller.MyBroadcastReceiver"
+            android:label="@string/title_activity_my_broadcast_receiver"
+            android:parentActivityName=".controller.Login" >
+            <meta-
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uy.edu.ucu.android.tramitesuy.controller.Login" />
+        </receiver>
+        <activity
+            android:name=".controller.MyIntentService"
+            android:label="@string/title_activity_my_intent_service"
+            android:parentActivityName=".controller.Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uy.edu.ucu.android.tramitesuy.controller.Login" />
+        </activity>
+        <activity
+            android:name=".controller.ResultsActivity"
+            android:label="@string/title_activity_results"
+            android:parentActivityName=".controller.Login" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="uy.edu.ucu.android.tramitesuy.controller.Login" />
         </activity>
     </application>
 
