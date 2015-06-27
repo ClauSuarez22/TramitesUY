@@ -24,10 +24,11 @@ public class ProceedingsProvider extends ContentProvider {
 
     private ProceedingsOpenHelper mOpenHelper;
 
-    // TODO: For each type of URI you want to add, create a corresponding code.
     static final int PROCEEDING = 100;
+    static final int PROCEEDING_CATEGORY = 101;
     static final int CATEGORY = 300;
     static final int LOCATION = 400;
+    static final int LOCATION_PROCEEDING = 401;
 
 
     public ProceedingsProvider() {}
@@ -44,7 +45,8 @@ public class ProceedingsProvider extends ContentProvider {
         matcher.addURI(authority, ProceedingsContract.PATH_PROCEEDING, PROCEEDING);
         matcher.addURI(authority, ProceedingsContract.PATH_CATEGORY, CATEGORY);
         matcher.addURI(authority, ProceedingsContract.PATH_LOCATION, LOCATION);
-        //TODO: add missing matches for the new URIs and their respective code
+        matcher.addURI(authority, ProceedingsContract.PATH_PROCEEDING + "/" + ProceedingsContract.PATH_CATEGORY, PROCEEDING_CATEGORY);
+        matcher.addURI(authority, ProceedingsContract.PATH_LOCATION + "/" + ProceedingsContract.PATH_PROCEEDING, LOCATION_PROCEEDING);
 
         return matcher;
     }
@@ -102,15 +104,25 @@ public class ProceedingsProvider extends ContentProvider {
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         switch (mUriMatcher.match(uri)) {
-            case PROCEEDING:
+            case PROCEEDING: //Llamar al metodo buildAllProceedingUri()
                 qb.setTables(ProceedingsContract.ProceedingEntry.TABLE_NAME);
-                //qb.appendWhere( mOpenHelper.COLUMN_ID + " = " + uri.getPathSegments().get(1))
+
+                if ( uri.getPathSegments().size() > 1 )
+                {
+                    qb.appendWhere( ProceedingsContract.ProceedingEntry._ID + " = " + ProceedingsContract.ProceedingEntry.getProceedingFromUri( uri ));
+                }
+
                 break;
-            case CATEGORY:
+            case PROCEEDING_CATEGORY: //Llamar al metodo buildProceedingCategory()
+                qb.setTables(ProceedingsContract.ProceedingEntry.TABLE_NAME);
+                qb.appendWhere( ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = " + ProceedingsContract.ProceedingEntry.getCategoryFromUri( uri ));
+                break;
+            case CATEGORY: //Llamar al metodo buildAllCategoryUri()
                 qb.setTables(ProceedingsContract.CategoryEntry.TABLE_NAME);
                 break;
-            case LOCATION:
+            case LOCATION_PROCEEDING: //Llamar al metodo buildLocationProceeding()
                 qb.setTables(ProceedingsContract.LocationEntry.TABLE_NAME);
+                qb.appendWhere( ProceedingsContract.LocationEntry.COLUMN_PROC_KEY + " = " + ProceedingsContract.LocationEntry.getProceedingFromUri( uri ));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);

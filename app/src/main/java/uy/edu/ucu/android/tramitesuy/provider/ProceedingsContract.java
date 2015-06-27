@@ -2,6 +2,7 @@ package uy.edu.ucu.android.tramitesuy.provider;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -50,12 +51,17 @@ public class ProceedingsContract {
         public static final String COLUMN_DEPENDS_ON = "depends_on";
         public static final String COLUMN_CAT_KEY = "category_id";
 
+        //Retorna la Uri que obtiene todos los proceeding
+        public static Uri buildAllProceedingUri() {
+            return CONTENT_URI;
+        }
 
+        //Retorna la Uri que obtiene el detalle de un proceeding a partir de su ID
         public static Uri buildProceedingUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
-
+        //Retorna la Uri que obtiene los proceeding asociados a una categoria
         public static Uri buildProceedingCategory(long categoryId) {
             return ContentUris.withAppendedId(Uri.withAppendedPath(CONTENT_URI, PATH_CATEGORY), categoryId);
         }
@@ -67,6 +73,7 @@ public class ProceedingsContract {
         public static long getCategoryFromUri(Uri uri) {
             return Long.parseLong(uri.getPathSegments().get(2));
         }
+
     }
 
     // category path
@@ -85,8 +92,22 @@ public class ProceedingsContract {
         public static final String COLUMN_CODE = "code";
         public static final String COLUMN_NAME = "name";
 
+        //Retorna la Uri que obtiene todas las Category
+        public static Uri buildAllCategoryUri() {
+            return CONTENT_URI;
+        }
+
+        //Retorna la Uri que obtiene el detalle de una category a partir de su ID
         public static Uri buildCategoryUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static long getCategoryFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
+        public static long getProceedingFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(2));
         }
 
     }
@@ -114,16 +135,9 @@ public class ProceedingsContract {
         public static final String COLUMN_COMMENTS = "comments";
         public static final String COLUMN_PROC_KEY = "proceeding_id";
 
-        public static Uri buildLocationUri(long id) {
-            return ContentUris.withAppendedId(CONTENT_URI, id);
-        }
-
+        //Retorna la Uri que obtiene las location asociadas a un proceeding
         public static Uri buildLocationProceeding(long proceedingId) {
             return ContentUris.withAppendedId(Uri.withAppendedPath(CONTENT_URI, PATH_PROCEEDING), proceedingId);
-        }
-
-        public static long getLocationFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(1));
         }
 
         public static long getProceedingFromUri(Uri uri) {
