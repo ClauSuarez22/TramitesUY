@@ -45,8 +45,6 @@ public class ProceedingsProvider extends ContentProvider {
         matcher.addURI(authority, ProceedingsContract.PATH_PROCEEDING, PROCEEDING);
         matcher.addURI(authority, ProceedingsContract.PATH_CATEGORY, CATEGORY);
         matcher.addURI(authority, ProceedingsContract.PATH_LOCATION, LOCATION);
-        matcher.addURI(authority, ProceedingsContract.PATH_PROCEEDING + "/" + ProceedingsContract.PATH_CATEGORY, PROCEEDING_CATEGORY);
-        matcher.addURI(authority, ProceedingsContract.PATH_LOCATION + "/" + ProceedingsContract.PATH_PROCEEDING, LOCATION_PROCEEDING);
 
         return matcher;
     }
@@ -106,23 +104,12 @@ public class ProceedingsProvider extends ContentProvider {
         switch (mUriMatcher.match(uri)) {
             case PROCEEDING: //Llamar al metodo buildAllProceedingUri()
                 qb.setTables(ProceedingsContract.ProceedingEntry.TABLE_NAME);
-
-                if ( uri.getPathSegments().size() > 1 )
-                {
-                    qb.appendWhere( ProceedingsContract.ProceedingEntry._ID + " = " + ProceedingsContract.ProceedingEntry.getProceedingFromUri( uri ));
-                }
-
-                break;
-            case PROCEEDING_CATEGORY: //Llamar al metodo buildProceedingCategory()
-                qb.setTables(ProceedingsContract.ProceedingEntry.TABLE_NAME);
-                qb.appendWhere( ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = " + ProceedingsContract.ProceedingEntry.getCategoryFromUri( uri ));
                 break;
             case CATEGORY: //Llamar al metodo buildAllCategoryUri()
                 qb.setTables(ProceedingsContract.CategoryEntry.TABLE_NAME);
                 break;
-            case LOCATION_PROCEEDING: //Llamar al metodo buildLocationProceeding()
+            case LOCATION: //Llamar al metodo buildLocationProceeding()
                 qb.setTables(ProceedingsContract.LocationEntry.TABLE_NAME);
-                qb.appendWhere( ProceedingsContract.LocationEntry.COLUMN_PROC_KEY + " = " + ProceedingsContract.LocationEntry.getProceedingFromUri( uri ));
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);

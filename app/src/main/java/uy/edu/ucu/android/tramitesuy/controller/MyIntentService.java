@@ -94,13 +94,16 @@ public class MyIntentService extends IntentService {
         else
             mBuilder.setContentText("Error en la carga");
 
-//        // checking if category already exists
-//        Cursor categoryCursor = context.getContentResolver().query(
-//                ProceedingsContract.CategoryEntry.build....,
-//                null,
-//                null,
-//                null,
-//                null);
+        /*String where = ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = ?";
+        String[] whereArgs = {"1"};
+
+        // checking if category already exists
+        Cursor categoryCursor = this.getContentResolver().query(
+                ProceedingsContract.ProceedingEntry.buildAllProceedingUri(),
+                null,
+                where,
+                whereArgs,
+                null);*/
 
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }

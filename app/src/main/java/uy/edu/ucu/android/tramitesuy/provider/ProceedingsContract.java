@@ -60,20 +60,6 @@ public class ProceedingsContract {
         public static Uri buildProceedingUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
-
-        //Retorna la Uri que obtiene los proceeding asociados a una categoria
-        public static Uri buildProceedingCategory(long categoryId) {
-            return ContentUris.withAppendedId(Uri.withAppendedPath(CONTENT_URI, PATH_CATEGORY), categoryId);
-        }
-
-        public static long getProceedingFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(1));
-        }
-
-        public static long getCategoryFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(2));
-        }
-
     }
 
     // category path
@@ -101,15 +87,6 @@ public class ProceedingsContract {
         public static Uri buildCategoryUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
-
-        public static long getCategoryFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(1));
-        }
-
-        public static long getProceedingFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(2));
-        }
-
     }
 
     // location path
@@ -135,13 +112,14 @@ public class ProceedingsContract {
         public static final String COLUMN_COMMENTS = "comments";
         public static final String COLUMN_PROC_KEY = "proceeding_id";
 
+        //Retorna la Uri que obtiene todas location
+        public static Uri buildAllLocationUri() {
+            return CONTENT_URI;
+        }
+
         //Retorna la Uri que obtiene las location asociadas a un proceeding
         public static Uri buildLocationProceeding(long proceedingId) {
             return ContentUris.withAppendedId(Uri.withAppendedPath(CONTENT_URI, PATH_PROCEEDING), proceedingId);
-        }
-
-        public static long getProceedingFromUri(Uri uri) {
-            return Long.parseLong(uri.getPathSegments().get(2));
         }
     }
 
