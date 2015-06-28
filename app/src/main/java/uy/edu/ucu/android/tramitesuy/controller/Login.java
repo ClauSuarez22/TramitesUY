@@ -1,13 +1,20 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
+import java.util.List;
+
+import uy.edu.ucu.android.parser.model.Category;
+import uy.edu.ucu.android.parser.model.Proceeding;
 import uy.edu.ucu.android.tramitesuy.R;
+import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
 import uy.edu.ucu.android.tramitesuy.util.Utils;
 
 
@@ -20,11 +27,45 @@ public class Login extends ActionBarActivity {
 
         runIntentService();
 
-        //try {
-        //    Utils.loadProceedings(Login.this);
-        //}catch (Exception e){
-        //    // Print
-        //}
+        //Carga todas las categorias
+
+        Cursor categoryCursor = this.getContentResolver().query(
+                ProceedingsContract.CategoryEntry.buildAllCategoryUri(),
+                null,
+                null,
+                null,
+                null);
+
+        List<Category> allCategories = EntitiesService.getAllCategories(categoryCursor);
+
+        //El usuario selecciona la categoria 1
+
+        final String categoryId = "1";
+
+        String whereProceeding = ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = ?";
+        String[] whereArgsProceeding = {categoryId};
+
+        Cursor proceedingCursor = this.getContentResolver().query(
+                ProceedingsContract.ProceedingEntry.buildAllProceedingUri(),
+                null,
+                whereProceeding,
+                whereArgsProceeding,
+                null);
+
+        List<Proceeding> proceedings = EntitiesService.getAllProceeding(proceedingCursor);
+
+        Button button = (Button) findViewById(R.id.ver_detalle);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //El usuario selecciona el tramite 1
+                String proceedingId = "1";
+                String categId = categoryId;
+                Intent intent = new Intent(Login.this, DetailActivity.class);
+                intent.putExtra("proceedingId", proceedingId);
+                intent.putExtra("categoryId", categId);
+                startActivity(intent);
+            }
+        });
 
     }
 

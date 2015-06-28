@@ -17,11 +17,14 @@ import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
  */
 public class EntitiesService {
 
+    public static List<Category> categories = new ArrayList<>();
+    public static List<Proceeding> categoryProceeding = new ArrayList<>();
+
     /**
      * Gets all proceeding stored on the Proceeding table
      * @return
      */
-    public List<Proceeding> getAllProceeding( Cursor cursor ){
+    public static List<Proceeding> getAllProceeding( Cursor cursor ){
 
         List<Proceeding> todos = new ArrayList<>();
 
@@ -31,6 +34,9 @@ public class EntitiesService {
             cursor.moveToNext();
         }
         cursor.close();
+
+        categoryProceeding = todos;
+
         return todos;
     }
 
@@ -39,7 +45,7 @@ public class EntitiesService {
      * @param cursor cursor with row data
      * @return proceeding object
      */
-    public Proceeding cursorToProceeding(Cursor cursor) {
+    public static Proceeding cursorToProceeding(Cursor cursor) {
 
         Proceeding proceeding = new Proceeding();
         proceeding.setId(cursor.getString(cursor.getColumnIndex(ProceedingsContract.ProceedingEntry._ID)));
@@ -64,7 +70,7 @@ public class EntitiesService {
 
     }
 
-    public Proceeding getProceedingById( List<Proceeding> proceedings, String proceedingId){
+    public static Proceeding getProceedingById( List<Proceeding> proceedings, String proceedingId){
         Proceeding proceeding = null;
 
         for (Proceeding proc : proceedings)
@@ -83,7 +89,7 @@ public class EntitiesService {
      * Gets all proceeding stored on the Location table
      * @return
      */
-    public List<Location> getAllLocations( Cursor cursor ){
+    public static List<Location> getAllLocations( Cursor cursor ){
 
         List<Location> todos = new ArrayList<>();
 
@@ -93,6 +99,7 @@ public class EntitiesService {
             cursor.moveToNext();
         }
         cursor.close();
+
         return todos;
     }
 
@@ -101,7 +108,7 @@ public class EntitiesService {
      * @param cursor cursor with row data
      * @return proceeding object
      */
-    public Location cursorToLocation(Cursor cursor) {
+    public static Location cursorToLocation(Cursor cursor) {
 
         Location location = new Location();
         location.setAddress(cursor.getString(cursor.getColumnIndex(ProceedingsContract.LocationEntry.COLUMN_ADDRESS)));
@@ -120,7 +127,7 @@ public class EntitiesService {
      * Gets all proceeding stored on the Category table
      * @return
      */
-    public List<Category> getAllCategories( Cursor cursor ){
+    public static List<Category> getAllCategories( Cursor cursor ){
 
         List<Category> todos = new ArrayList<>();
 
@@ -130,6 +137,9 @@ public class EntitiesService {
             cursor.moveToNext();
         }
         cursor.close();
+
+        categories = todos;
+
         return todos;
     }
 
@@ -138,7 +148,7 @@ public class EntitiesService {
      * @param cursor cursor with row data
      * @return proceeding object
      */
-    public Category cursorToCategory(Cursor cursor) {
+    public static Category cursorToCategory(Cursor cursor) {
 
         Category category = new Category();
         category.setId(cursor.getString(cursor.getColumnIndex(ProceedingsContract.CategoryEntry._ID)));
@@ -149,7 +159,7 @@ public class EntitiesService {
 
     }
 
-    public Category getCategoryById( List<Category> categories, String categoryId){
+    public static Category getCategoryById( List<Category> categories, String categoryId){
         Category category = null;
 
         for (Category categ : categories)

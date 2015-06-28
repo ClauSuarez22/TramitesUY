@@ -8,4 +8,7 @@
     <string name="title_activity_my_broadcast_receiver">MyBroadcastReceiver</string>
     <string name="title_activity_my_intent_service">MyIntentService</string>
     <string name="title_activity_results">ResultsActivity</string>
+    <string name="title_activity_initial">InitialActivity</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_map">MapActivity</string>
 </resources>
