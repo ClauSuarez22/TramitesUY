@@ -3,8 +3,14 @@ package uy.edu.ucu.android.tramitesuy.provider;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import uy.edu.ucu.android.parser.model.Proceeding;
 
 /**
  * Contract class for the proceeding schema

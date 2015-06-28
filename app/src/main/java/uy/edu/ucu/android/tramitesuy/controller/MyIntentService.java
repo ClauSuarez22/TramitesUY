@@ -21,7 +21,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import uy.edu.ucu.android.parser.model.Category;
+import uy.edu.ucu.android.parser.model.Location;
+import uy.edu.ucu.android.parser.model.Proceeding;
+import uy.edu.ucu.android.parser.model.WhenAndWhere;
 import uy.edu.ucu.android.tramitesuy.R;
 import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
 import uy.edu.ucu.android.tramitesuy.util.Utils;
@@ -94,16 +100,70 @@ public class MyIntentService extends IntentService {
         else
             mBuilder.setContentText("Error en la carga");
 
-        /*String where = ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = ?";
-        String[] whereArgs = {"1"};
+        /*
+        //A continuación se obtienen todas las categorias a mostrar en el combobox
+        EntitiesService entitiesService = new EntitiesService();
 
-        // checking if category already exists
         Cursor categoryCursor = this.getContentResolver().query(
+                ProceedingsContract.CategoryEntry.buildAllCategoryUri(),
+                null,
+                null,
+                null,
+                null);
+
+        List<Category> allCategories = entitiesService.getAllCategories(categoryCursor);
+
+        //En allCategories tengo la informacion de todas las categorias a listar
+        //Se supone que en el combobox de categorias se guarda, ademas del Nombre de la categoria, tambien su ID
+        //entonces el usuario clickea en la categoria que tiene id 1, por ejemplo.
+
+        String categoryId = "1"; //-----> por esto esta este 1 acá
+
+        //A continuacion vamos a buscar todos los tramites de la categoria 1
+
+        String whereProceeding = ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = ?";
+        String[] whereArgsProceeding = {categoryId};
+
+        Cursor proceedingCursor = this.getContentResolver().query(
                 ProceedingsContract.ProceedingEntry.buildAllProceedingUri(),
                 null,
-                where,
-                whereArgs,
-                null);*/
+                whereProceeding,
+                whereArgsProceeding,
+                null);
+
+        //Acá obtengo todos los tramites de la categoria 1 que tengo que listar en la Pantalla Incial
+        List<Proceeding> proceedings = entitiesService.getAllProceeding(proceedingCursor);
+
+        //Se supone que cuando listo todos los tramites, me guardo como info "oculta" el ID de cada uno
+        //Entonces se supone que el usuario selecciona el tramite que tiene id 1, por ejemplo.
+
+        String proceedingId = "1"; //-----> por esto esta este 1 acá
+
+        //A continuación obtengo toda la informacion a mostrar sobre ese tramite
+        Proceeding proceeding = entitiesService.getProceedingById(proceedings, proceedingId);
+
+        String whereLocation = ProceedingsContract.LocationEntry.COLUMN_PROC_KEY + " = ?";
+        String[] whereArgsLocation = {proceeding.getId().toString()};
+
+        Cursor locationCursor = this.getContentResolver().query(
+                ProceedingsContract.LocationEntry.buildAllLocationUri(),
+                null,
+                whereLocation,
+                whereArgsLocation,
+                null);
+
+        List<Location> locations = entitiesService.getAllLocations(locationCursor);
+        proceeding.getWhenAndWhere().setLocations(locations);
+
+        Category categoryProceeding = entitiesService.getCategoryById( allCategories, categoryId );
+        List<Category> listCategories = new ArrayList<>();
+        listCategories.add(categoryProceeding);
+        proceeding.setCategories( listCategories );
+
+        //Aca ya termine de obtener toda la informacion relevante sobre el tramite y esta pronto
+        //para mostrarlo en la pantalla siguiente
+
+        */
 
         notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }

@@ -5,8 +5,13 @@ package uy.edu.ucu.android.parser.model;
  */
 public class Category {
 
+    private String id;
     private String code;
     private String name;
+
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public String getCode() {
         return code;
