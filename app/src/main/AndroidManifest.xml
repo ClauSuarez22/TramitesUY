@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".controller.Login"
+            android:name=".controller.MainMenuActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,14 +41,10 @@
         <activity
             android:name=".controller.ResultsActivity"
             android:label="@string/title_activity_results"
-            android:parentActivityName=".controller.Login" >
+            android:parentActivityName=".controller.MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="uy.edu.ucu.android.tramitesuy.controller.Login" />
-        </activity>
-        <activity
-            android:name=".controller.InitialActivity"
-            android:label="@string/title_activity_initial" >
+                android:value=".controller.MainMenuActivity" />
         </activity>
         <activity
             android:name=".controller.DetailActivity"
