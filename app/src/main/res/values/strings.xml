@@ -11,4 +11,5 @@
     <string name="title_activity_initial">InitialActivity</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_proceeding_detail_adapter">ProceedingDetailAdapter</string>
 </resources>

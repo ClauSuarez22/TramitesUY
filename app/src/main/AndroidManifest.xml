@@ -54,6 +54,10 @@
             android:name=".controller.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
+        <activity
+            android:name=".controller.ProceedingDetailAdapter"
+            android:label="@string/title_activity_proceeding_detail_adapter" >
+        </activity>
     </application>
 
 </manifest>

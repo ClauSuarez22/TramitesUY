@@ -3,8 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="teamTextSize">14sp</dimen>
-    <dimen name="dateTextSize">10sp</dimen>
-    <dimen name="timeTextSize">10sp</dimen>
+    <dimen name="textSize">9sp</dimen>
     <dimen name="letterSize">12dp</dimen>
     <dimen name="match_details_header_height">60dp</dimen>
     <dimen name="match_details_content_center">50dp</dimen>
