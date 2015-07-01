@@ -1,5 +1,6 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -38,7 +39,7 @@ public class MainMenuActivity extends ListActivity {
     private List<Proceeding> mItemsList;
 
     // table name
-    public static final String EMPTY_ITEM = "(Seleccionar Categoria)";
+    public static final String EMPTY_ITEM = "Seleccione una categoría";
     public static final String DB_FULL_PATH = "";
 
     @Override
@@ -50,6 +51,10 @@ public class MainMenuActivity extends ListActivity {
         // if (!checkDataBase){
             //runIntentService();
         //}
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Tramites UY!");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mItemsList = new ArrayList<Proceeding>();
         mSpinner = (Spinner)findViewById(R.id.spinner_categories);

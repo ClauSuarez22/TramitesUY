@@ -13,4 +13,11 @@
         android:text="Ver mapa"
         android:onClick="verMapa" />
 
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:id="@android:id/list" />
+
 </RelativeLayout>

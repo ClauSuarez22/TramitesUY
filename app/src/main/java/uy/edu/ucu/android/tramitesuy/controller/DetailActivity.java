@@ -1,13 +1,16 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
+import android.app.ActionBar;
+import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +21,16 @@ import uy.edu.ucu.android.parser.model.Proceeding;
 import uy.edu.ucu.android.tramitesuy.R;
 import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
 
-public class DetailActivity extends ActionBarActivity {
+public class DetailActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setTitle("Detalle de tramite");
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
@@ -71,16 +78,16 @@ public class DetailActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Intent homeIntent = new Intent(this, MainActivity.class);
+                //startActivity(homeIntent);
+                finish();
+                break;
+            default:
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 }

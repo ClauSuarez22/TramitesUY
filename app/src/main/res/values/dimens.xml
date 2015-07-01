@@ -2,4 +2,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="teamTextSize">14sp</dimen>
+    <dimen name="dateTextSize">10sp</dimen>
+    <dimen name="timeTextSize">10sp</dimen>
+    <dimen name="letterSize">12dp</dimen>
+    <dimen name="match_details_header_height">60dp</dimen>
+    <dimen name="match_details_content_center">50dp</dimen>
+    <dimen name="match_details_h2h_height">60dp</dimen>
+    <dimen name="match_details_team_name">100dp</dimen>
+    <dimen name="match_details_h2h_team_name">150dp</dimen>
+    <dimen name="team_logo_height">250dp</dimen>
 </resources>
