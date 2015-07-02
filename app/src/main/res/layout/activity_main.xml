@@ -13,12 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@null"
-        android:dividerHeight="0dp"
+        android:divider="@color/abc_search_url_text_normal"
+        android:dividerHeight="1dp"
         android:id="@android:id/list" />
 
 </LinearLayout>

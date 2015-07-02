@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/uy/edu/ucu/android/tramitesuy/controller/ProceedingsListDetailActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/uy/edu/ucu/android/tramitesuy/controller/ProceedingsListFragment.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_proceedings_list_detail.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_proceedings_list.xml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/menu/menu_proceedings_list_detail.xml" charset="UTF-8" />
+  </component>
 </project>
 

@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -18,21 +18,37 @@
 
             <TextView
                 android:id="@+id/proceeding_title"
-                android:textSize="14sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                style="@style/letterStyle"
+                android:textSize="@dimen/titleItemSize"
                 android:text="Título de Trámite"/>
+
+            <TextView
+                android:id="@+id/proceeding_depends_on"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:textSize="@dimen/letterItemSize"
+                android:textStyle="bold"
+                android:text="Dependencia"
+                android:maxLines="1"
+                android:maxLength="50"
+                android:ellipsize="end"/>
 
             <TextView
                 android:id="@+id/proceeding_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
+                android:layout_marginLeft="5dp"
                 android:text="Descripción del trámite"
-                android:maxLines="3"
-                android:maxLength="50"
+                android:textSize="@dimen/letterItemSize"
+                android:maxLines="2"
+                android:maxLength="200"
                 android:ellipsize="end"/>
-
         </LinearLayout>
 
     </LinearLayout>

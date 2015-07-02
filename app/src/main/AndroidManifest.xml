@@ -8,12 +8,26 @@
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:name=".controller.MainMenuActivity"
-            android:label="@string/title_activity_login" >
+            android:name=".controller.InitialActivity"
+            android:label="@string/app_name"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".controller.ProceedingsListDetailActivity"
+            android:label="Trámites" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".controller.InitialActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
 
@@ -31,7 +45,7 @@
         <receiver
             android:name=".controller.MyBroadcastReceiver"
             android:exported="@string/title_activity_my_broadcast_receiver"
-            android:parentActivityName=".controller.Login" >
+            android:parentActivityName=".controller.InitialActivity" >
             <intent-filter>
                 <action android:name="uy.edu.ucu.android.servicedemo.service.receiver.PROGRESS" />
                 <action android:name="uy.edu.ucu.android.servicedemo.service.receiver.FINISHED" />
@@ -39,24 +53,19 @@
         </receiver>
 
         <activity
-            android:name=".controller.ResultsActivity"
-            android:label="@string/title_activity_results"
-            android:parentActivityName=".controller.MainMenuActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".controller.MainMenuActivity" />
-        </activity>
-        <activity
             android:name=".controller.DetailActivity"
             android:label="@string/title_activity_detail" >
         </activity>
+        <!--
+        A BORRAR
         <activity
             android:name=".controller.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
+        -->
         <activity
-            android:name=".controller.ProceedingDetailAdapter"
-            android:label="@string/title_activity_proceeding_detail_adapter" >
+            android:name=".controller.ProceedingDetailActivity"
+            android:label="@string/title_activity_proceeding_detail" >
         </activity>
     </application>
 

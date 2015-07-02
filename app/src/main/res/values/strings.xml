@@ -12,4 +12,8 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_proceeding_detail_adapter">ProceedingDetailAdapter</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_proceeding_detail">ProceedingDetailActivity</string>
 </resources>

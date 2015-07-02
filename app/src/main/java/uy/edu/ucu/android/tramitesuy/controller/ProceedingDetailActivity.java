@@ -1,24 +1,35 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
+import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 
 import uy.edu.ucu.android.tramitesuy.R;
 
-public class ResultsActivity extends ActionBarActivity {
+public class ProceedingDetailActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_results);
+        setContentView(R.layout.activity_proceeding_detail2);
+
+        Bundle extras = getIntent().getExtras();
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_detail, ProceedingsDetailFragment.newInstance(extras.getInt("proceedingId"),extras.getString("categoryName")))
+                .commit();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_results, menu);
+        getMenuInflater().inflate(R.menu.menu_proceeding_detail, menu);
         return true;
     }
 
