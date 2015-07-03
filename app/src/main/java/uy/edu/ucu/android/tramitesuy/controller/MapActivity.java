@@ -1,9 +1,11 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
 import android.app.ActionBar;
-import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,12 +16,22 @@ import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -35,7 +47,9 @@ import uy.edu.ucu.android.tramitesuy.R;
 import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
 
 public class MapActivity extends FragmentActivity
-    implements OnMapReadyCallback,  LoaderManager.LoaderCallbacks<Cursor>{
+    implements OnMapReadyCallback,  LoaderManager.LoaderCallbacks<Cursor>,GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
+        LocationListener {
 
     private static final int LOCATION_PROCEEDINGS = 0;
     String[] LOCATION_PROCEEDING = new String[] {
@@ -50,6 +64,18 @@ public class MapActivity extends FragmentActivity
 
     private Integer mProceedingId;
     private GoogleMap mMap;
+
+    private static final int REQUEST_CONN_FAILED = 1000;
+
+    private TextView mCurrentLocationInfoText;
+
+    private GoogleApiClient mGoogleApiClient;
+    private MarkerOptions mMarkerOption;
+
+
+    private android.location.Location mLastLocation;
+    private LocationRequest mLocationRequest;
+    private boolean mRequestingLocationUpdates = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +94,17 @@ public class MapActivity extends FragmentActivity
         if ( extras != null ) {
             mProceedingId = extras.getInt("proceedingId");
         }
+        buildGoogleApiClient();
     }
+
+    protected synchronized void buildGoogleApiClient(){
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -126,10 +162,122 @@ public class MapActivity extends FragmentActivity
 
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        // Connected to Google Play services
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        mMarkerOption = new MarkerOptions()
+                .title("Posición Actual")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+        updateLocation();
+        createLocationRequest();
+    }
+
+    protected LocationRequest createLocationRequest() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(5000);
+        mLocationRequest.setFastestInterval(2500);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        return mLocationRequest;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopLocationUpdates();
+    }
+
+    protected void stopLocationUpdates() {
+        mRequestingLocationUpdates = false;
+        LocationServices.FusedLocationApi.removeLocationUpdates(
+                mGoogleApiClient, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mGoogleApiClient.isConnected() && !mRequestingLocationUpdates) {
+            startLocationUpdates();
+        }
+    }
+
+    private void startLocationUpdates() {
+        mRequestingLocationUpdates = true;
+        LocationServices.FusedLocationApi.
+                requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    @Override
+    public void onLocationChanged(android.location.Location location) {
+        mLastLocation = location;
+        updateLocation();
+    }
+
+    private void updateLocation(){
+        if (mLastLocation != null && mMap != null) {
+            Marker m = mMap.addMarker(mMarkerOption);
+            m.setPosition(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()));
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int cause) {
+        // The connection has been interrupted.
+        // Disable any UI components that depend on Google APIs
+        // until onConnected() is called.
+        Log.d("MainActivity", "Connection Suspended by " + cause);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        // This callback is important for handling errors that
+        // may occur while attempting to connect with Google.
+        Log.d("MapActivity", "Connection Failed by " + result.getErrorCode());
+        if(result.hasResolution()){
+            try{
+                result.startResolutionForResult(this, REQUEST_CONN_FAILED);
+            } catch (IntentSender.SendIntentException e) {
+                e.printStackTrace();
+                mGoogleApiClient.connect(); // try to connect again
+            }
+        }else {
+            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, REQUEST_CONN_FAILED)
+                    .show();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int reqCode, int resCode, Intent data){
+        super.onActivityResult(reqCode, resCode, data);
+
+        if(reqCode == REQUEST_CONN_FAILED){
+            if(resCode == RESULT_OK){
+                if (!mGoogleApiClient.isConnecting() &&
+                        !mGoogleApiClient.isConnected()) {
+                    mGoogleApiClient.connect();
+                }
+            }
+        }
+
+    }
+
     private class GetAddressAsyncTask extends AsyncTask<Location, Integer, LatLng> {
 
         private Context mContext;
-        private String mAddress;
+        private Location mLocationAddress;
         private static final String geocodingUrl = "https://maps.googleapis.com/maps/api/geocode/json?address=%s&key=%s";
 
         public GetAddressAsyncTask(Context context){
@@ -145,9 +293,10 @@ public class MapActivity extends FragmentActivity
         protected LatLng doInBackground(Location... params) {
             HttpURLConnection connection = null;
             LatLng cordinates = null;
-            mAddress = params[0].getAddress() + "," + params[0].getCity() + "," + params[0].getState();
+            String address = params[0].getAddress() + "," + params[0].getCity() + "," + params[0].getState() + ",Uruguay";
+            mLocationAddress = params[0];
             try{
-                URL url = new URL(String.format(geocodingUrl, URLEncoder.encode(mAddress, "UTF-8"), "AIzaSyBK4SZsUqTDjZutCSpTZxGjeYkfA1VOQSU"));
+                URL url = new URL(String.format(geocodingUrl, URLEncoder.encode(address, "UTF-8"), "AIzaSyBK4SZsUqTDjZutCSpTZxGjeYkfA1VOQSU"));
                 connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
 
@@ -178,10 +327,23 @@ public class MapActivity extends FragmentActivity
         @Override
         public void onPostExecute(LatLng address){
             if(address != null) {
+                String city = (mLocationAddress.getCity() != null)? mLocationAddress.getCity() + "\n": "";
                 if(mMap != null ){
-                    mMap.addMarker(new MarkerOptions()
-                     .position(address)
-                     .title(mAddress));
+                    if(mLastLocation != null){
+                        float[] distance = new float[1];
+                        android.location.Location.distanceBetween(mLastLocation.getLatitude(), mLastLocation.getLongitude(),
+                                address.latitude, address.longitude, distance);
+                        Float distanceKm = distance[0] / 1000;
+                        mMap.addMarker(new MarkerOptions()
+                                .position(address)
+                                .title(mLocationAddress.getAddress())
+                                .snippet(city + mLocationAddress.getState() + " Distancia: " + String.format("%.2f", distanceKm) + "Km." ));
+                    }else{
+                        mMap.addMarker(new MarkerOptions()
+                                .position(address)
+                                .title(mLocationAddress.getAddress())
+                                .snippet(city + mLocationAddress.getState() ));
+                    }
                 }
             }
             else{
