@@ -15,12 +15,12 @@ public class ProceedingDetailActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_proceeding_detail);
 
-        Bundle extras = getIntent().getExtras();
-
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_detail, ProceedingsDetailFragment.newInstance(extras.getInt("proceedingId"),extras.getString("categoryName")))
-                .commit();
-
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragment_detail, ProceedingsDetailFragment.newInstance(extras.getInt("proceedingId"), extras.getString("categoryName")))
+                    .commit();
+        }
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
