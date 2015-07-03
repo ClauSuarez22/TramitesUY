@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".controller.ProceedingDetailActivity">
+
+    <fragment
+        android:name="uy.edu.ucu.android.tramitesuy.controller.ProceedingsListFragment"
+        android:id="@+id/list_fragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_proceedings_list" />
+
+    <FrameLayout
+        android:id="@+id/detail_fragment"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_proceedings_detail" />
+
+</LinearLayout>

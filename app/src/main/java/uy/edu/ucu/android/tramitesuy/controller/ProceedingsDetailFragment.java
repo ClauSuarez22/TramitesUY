@@ -64,6 +64,9 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
         return fragment;
     }
 
+    public int getShownIndex() {
+        return getArguments().getInt("proceedingId", 0);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

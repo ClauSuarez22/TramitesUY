@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -38,6 +39,7 @@ public class ProceedingsListFragment extends Fragment implements LoaderManager.L
     private SimpleCursorAdapter mProceedingsAdapter;
     private Integer mSelectedCategory;
     private String mSelectedCategoryName;
+    private boolean mDualPane;
 
     // These are the Contacts rows that we will retrieve.
     String[] ALL_CATEGORIES_PROJECTION = new String[] {
@@ -106,6 +108,8 @@ public class ProceedingsListFragment extends Fragment implements LoaderManager.L
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
+        View detailsFrame = getActivity().findViewById(R.id.detail_fragment);
+        mDualPane = detailsFrame != null && detailsFrame.getVisibility() == View.VISIBLE;
     }
 
     @Override
@@ -153,12 +157,23 @@ public class ProceedingsListFragment extends Fragment implements LoaderManager.L
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) mProceedingsAdapter.getItem(position);
                 Integer proceedingId = cursor.getInt(cursor.getColumnIndex(ProceedingsContract.ProceedingEntry._ID));
-                // Esta dando outOfBound [VER]
-                //String categoryId = selectedItem.getCategories().get(0).getId(); // Primer categoria [VER]
-                Intent intent = new Intent(getActivity(), ProceedingDetailActivity.class);
-                intent.putExtra("proceedingId", proceedingId);
-                intent.putExtra("categoryName", mSelectedCategoryName);
-                startActivity(intent);
+                if(mDualPane) {
+                    mListView.setItemChecked(position, true);
+                    ProceedingsDetailFragment proceedingDetails = (ProceedingsDetailFragment)
+                            getFragmentManager().findFragmentById(R.id.detail_fragment);
+                    if (proceedingDetails == null || proceedingDetails.getShownIndex() != position) {
+                        proceedingDetails = ProceedingsDetailFragment.newInstance(proceedingId,  mSelectedCategoryName);
+                        getFragmentManager().beginTransaction()
+                                .replace(R.id.detail_fragment, proceedingDetails)
+                                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                                .commit();
+                    }
+                }else{
+                    Intent intent = new Intent(getActivity(), ProceedingDetailActivity.class);
+                    intent.putExtra("proceedingId", proceedingId);
+                    intent.putExtra("categoryName", mSelectedCategoryName);
+                    startActivity(intent);
+                }
             }
         });
 
