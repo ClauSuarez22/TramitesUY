@@ -93,9 +93,9 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
 
         mMapButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), MapActivity.class);
-//                intent.putExtra("proceedingId", getIntent().getExtras().getString("proceedingId"));
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                intent.putExtra("proceedingId", mProceedingId);
+                startActivity(intent);
             }
         });
         mProceedingUrl.setMovementMethod(LinkMovementMethod.getInstance());

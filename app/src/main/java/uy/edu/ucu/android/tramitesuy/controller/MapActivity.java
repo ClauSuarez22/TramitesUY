@@ -4,19 +4,32 @@ import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import uy.edu.ucu.android.parser.model.Proceeding;
 import uy.edu.ucu.android.tramitesuy.R;
 
-public class MapActivity extends ListActivity {
+public class MapActivity extends FragmentActivity
+    implements OnMapReadyCallback{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        MapFragment mapFragment = (MapFragment)getFragmentManager()
+                .findFragmentById(R.id.locations_map);
+        mapFragment.getMapAsync(this);
 
         ActionBar actionBar = getActionBar();
         actionBar.setTitle("Sucursales");
@@ -25,10 +38,16 @@ public class MapActivity extends ListActivity {
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
             String proceedingId = extras.getString("proceedingId");
-
             //Aca se obtiene el procedimiento en cuestion, ver atributo WhereAndWhen para cargar datos en mapa
             Proceeding proceeding = EntitiesService.getProceedingById(EntitiesService.categoryProceeding, proceedingId);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+            .position(new LatLng(0,0))
+            .title("Marker"));
     }
 
 
@@ -53,4 +72,5 @@ public class MapActivity extends ListActivity {
 
         return true;
     }
+
 }
