@@ -1,5 +1,6 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
@@ -23,6 +24,9 @@ public class ProceedingDetailActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_detail, ProceedingsDetailFragment.newInstance(extras.getInt("proceedingId"),extras.getString("categoryName")))
                 .commit();
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
 
@@ -38,13 +42,17 @@ public class ProceedingDetailActivity extends FragmentActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                //Intent homeIntent = new Intent(this, MainActivity.class);
+                //startActivity(homeIntent);
+                finish();
+                break;
+            default:
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
+
     }
 }

@@ -7,20 +7,18 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-feature android:glEsVersion="0x00020000"
-        android:required="true"/>
-
-    <meta-data android:name="com.google.android.gms.version"
-        android:value="@integer/google_play_services_version" />
-    <meta-data android:name='com.google.android.geo.API_KEY'
-        android:value="AIzaSyBK4SZsUqTDjZutCSpTZxGjeYkfA1VOQSU" />
-
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
+        <uses-feature android:glEsVersion="0x00020000"
+            android:required="true"/>
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data android:name='com.google.android.geo.API_KEY'
+            android:value="AIzaSyBK4SZsUqTDjZutCSpTZxGjeYkfA1VOQSU" />
         <activity
             android:name=".controller.InitialActivity"
             android:label="@string/app_name"
@@ -32,7 +30,7 @@
         </activity>
         <activity
             android:name=".controller.ProceedingsListDetailActivity"
-            android:label="Trámites" >
+            android:label="  Trámites UY" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".controller.InitialActivity" />
@@ -44,7 +42,14 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".controller.ProceedingDetailActivity"
+            android:label="Detalle de Trámite" >
+        </activity>
+        <activity
+            android:name=".controller.MapActivity"
+            android:label="Sucursales" >
+        </activity>
         <provider
             android:name=".provider.ProceedingsProvider"
             android:authorities="uy.edu.ucu.android.tramitesuy"
@@ -68,7 +73,7 @@
 
         <activity
             android:name=".controller.DetailActivity"
-            android:label="@string/title_activity_detail" >
+            android:label="Detalle de Trámite" >
         </activity>
         <!--
         A BORRAR
@@ -77,10 +82,6 @@
             android:label="@string/title_activity_map" >
         </activity>
         -->
-        <activity
-            android:name=".controller.ProceedingDetailActivity"
-            android:label="@string/title_activity_proceeding_detail" >
-        </activity>
     </application>
 
 </manifest>

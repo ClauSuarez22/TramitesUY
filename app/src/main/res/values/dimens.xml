@@ -3,8 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="teamTextSize">14sp</dimen>
-    <dimen name="textSize">9sp</dimen>
-    <dimen name="letterSize">12dp</dimen>
+    <dimen name="textSize">16sp</dimen>
+    <dimen name="letterSize">18sp</dimen>
     <dimen name="titleItemSize">16sp</dimen>
     <dimen name="letterItemSize">14sp</dimen>
     <dimen name="match_details_header_height">60dp</dimen>
@@ -13,4 +13,5 @@
     <dimen name="match_details_team_name">100dp</dimen>
     <dimen name="match_details_h2h_team_name">150dp</dimen>
     <dimen name="team_logo_height">250dp</dimen>
+    <dimen name="martin_top_details_title">12sp</dimen>
 </resources>

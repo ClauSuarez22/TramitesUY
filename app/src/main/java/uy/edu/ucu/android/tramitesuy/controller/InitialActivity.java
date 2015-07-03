@@ -20,7 +20,8 @@ public class InitialActivity extends Activity {
 
     private String dbFullPath = "";
     private static final String DATABASE_NAME = "proceedings.db";
-    private ProgressDialog mProgressDialog;
+
+    private final int SPLASH_DISPLAY_LENGTH = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

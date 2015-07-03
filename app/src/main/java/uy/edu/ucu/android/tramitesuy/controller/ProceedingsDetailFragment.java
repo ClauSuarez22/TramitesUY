@@ -38,8 +38,8 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
     private TextView mProceedingStatus;
     private TextView mProceedingCategory;
     private Button mMapButton;
-    private Integer mProceedingId = 1;
-    private String mCategoryName = "TESTTTTTTTTTTT";
+    private Integer mProceedingId;
+    private String mCategoryName;
 
     // These are the Contacts rows that we will retrieve.
     String[] PROCEEDING_DETAIL_PROJECTION = new String[] {
@@ -125,7 +125,6 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
         if (data != null){
             data.moveToFirst();
 
@@ -134,12 +133,22 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
             mProceedingDependsOn.setText(data.getString(data.getColumnIndex(ProceedingsContract.ProceedingEntry.COLUMN_DEPENDS_ON)));
             String whenWhere = data.getString(data.getColumnIndex(ProceedingsContract.ProceedingEntry.COLUMN_LOCATION_OTHER_DATA));
             if(whenWhere != null){
+                // Quitar \n del inicio
+                int index = whenWhere.indexOf("\n");
+                if (index < 2){
+                    whenWhere = whenWhere.replaceFirst("\n","");
+                }
                 mProceedingWhenWhere.setText(whenWhere);
             }else{
                 mProceedingWhenWhere.setText("No hay información disponible.");
             }
             String reqs = data.getString(data.getColumnIndex(ProceedingsContract.ProceedingEntry.COLUMN_REQUISITES));
             if(reqs != null){
+                // Quitar \n del inicio
+                int index = reqs.indexOf("\n");
+                if (index < 2){
+                    reqs = reqs.replaceFirst("\n","");
+                }
                 mProceedingReq.setText(reqs);
             }else{
                 mProceedingReq.setText("No hay información disponible.");
@@ -155,6 +164,14 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
         // This is called when the last Cursor provided to onLoadFinished()
         // above is about to be closed.  We need to make sure we are no
         // longer using it.
+        mProceedingName.setText("");
+        mProceedingDescription.setText("");
+        mProceedingDependsOn.setText("");
+        mProceedingWhenWhere.setText("");
+        mProceedingReq.setText("");
+        mProceedingUrl.setText("");
+        mProceedingStatus.setText("");
+        mProceedingCategory.setText("");
     }
 
 
