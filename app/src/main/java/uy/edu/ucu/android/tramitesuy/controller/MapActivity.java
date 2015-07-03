@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -105,7 +106,6 @@ public class MapActivity extends FragmentActivity
                 .build();
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -153,7 +153,6 @@ public class MapActivity extends FragmentActivity
                     .execute(location);
                 data.moveToNext();
             }
-            data.close();
         }
     }
 
@@ -307,7 +306,6 @@ public class MapActivity extends FragmentActivity
                 }
 
                 String response = sb.toString();
-                Log.d(MapActivity.class.getSimpleName(), response);
                 JSONArray jsonArray = new JSONObject(response).getJSONArray("results");
                 if(jsonArray != null){
                     if(jsonArray.length() > 0){
@@ -327,7 +325,10 @@ public class MapActivity extends FragmentActivity
         @Override
         public void onPostExecute(LatLng address){
             if(address != null) {
-                String city = (mLocationAddress.getCity() != null)? mLocationAddress.getCity() + "\n": "";
+                String city = "";
+                if(mLocationAddress.getCity() != null) {
+                    city = mLocationAddress.getCity() + ", ";
+                }
                 if(mMap != null ){
                     if(mLastLocation != null){
                         float[] distance = new float[1];
@@ -337,7 +338,7 @@ public class MapActivity extends FragmentActivity
                         mMap.addMarker(new MarkerOptions()
                                 .position(address)
                                 .title(mLocationAddress.getAddress())
-                                .snippet(city + mLocationAddress.getState() + " Distancia: " + String.format("%.2f", distanceKm) + "Km." ));
+                                .snippet(city + mLocationAddress.getState() + ". Distancia: " + String.format("%.2f", distanceKm) + "Km." ));
                     }else{
                         mMap.addMarker(new MarkerOptions()
                                 .position(address)
@@ -345,9 +346,6 @@ public class MapActivity extends FragmentActivity
                                 .snippet(city + mLocationAddress.getState() ));
                     }
                 }
-            }
-            else{
-                Toast.makeText(mContext, "Error cargando sucursal para hacer el trámite", Toast.LENGTH_SHORT).show();
             }
         }
     }

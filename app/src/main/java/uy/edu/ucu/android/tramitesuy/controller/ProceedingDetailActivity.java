@@ -1,14 +1,10 @@
 package uy.edu.ucu.android.tramitesuy.controller;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.SearchView;
 
 import uy.edu.ucu.android.tramitesuy.R;
 
@@ -17,7 +13,7 @@ public class ProceedingDetailActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_proceeding_detail2);
+        setContentView(R.layout.activity_proceeding_detail);
 
         Bundle extras = getIntent().getExtras();
 
