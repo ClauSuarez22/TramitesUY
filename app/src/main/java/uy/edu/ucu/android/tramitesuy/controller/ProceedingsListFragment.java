@@ -41,19 +41,6 @@ public class ProceedingsListFragment extends Fragment implements LoaderManager.L
     private String mSelectedCategoryName;
     private boolean mDualPane;
 
-    // These are the Contacts rows that we will retrieve.
-    String[] ALL_CATEGORIES_PROJECTION = new String[] {
-            ProceedingsContract.CategoryEntry._ID,
-            ProceedingsContract.CategoryEntry.COLUMN_NAME,
-    };
-
-    String[] PROCEEDINGS_LIST_PROJECTION = new String[] {
-            ProceedingsContract.ProceedingEntry._ID,
-            ProceedingsContract.ProceedingEntry.COLUMN_TITLE,
-            ProceedingsContract.ProceedingEntry.COLUMN_DESCRIPTION,
-            ProceedingsContract.ProceedingEntry.COLUMN_DEPENDS_ON
-    };
-
     public ProceedingsListFragment() {
     }
 
@@ -193,26 +180,18 @@ public class ProceedingsListFragment extends Fragment implements LoaderManager.L
             case CATEGORY_LOADER_ID: {
                 baseUri = ProceedingsContract.CategoryEntry.CONTENT_URI;
                 return new CursorLoader(getActivity(), baseUri,
-                        ALL_CATEGORIES_PROJECTION, null, null, null);
+                        null, null, null, null);
             }
             case PROCEEDINGS_FILTER_LOADER_ID: {
                 if (mProceedingFilter.equals("")) {
-                    String whereProceeding = ProceedingsContract.ProceedingEntry.COLUMN_CAT_KEY + " = ?";
-                    String[] whereArgsProceeding = {mSelectedCategory.toString()};
-                    baseUri = ProceedingsContract.ProceedingEntry.buildAllProceedingUri();
+                    baseUri = ProceedingsContract.ProceedingEntry.buildProceedingByCategoryUri(mSelectedCategory);
                     cursor = new CursorLoader(getActivity(), baseUri,
-                            PROCEEDINGS_LIST_PROJECTION, whereProceeding,
-                            whereArgsProceeding, null);
+                            null, null, null, null);
                     return cursor;
                 } else {
-                    baseUri = ProceedingsContract.ProceedingEntry.buildAllProceedingUri();
-                    String whereProceeding = ProceedingsContract.ProceedingEntry.COLUMN_DEPENDS_ON + " like ? or "
-                             +  ProceedingsContract.ProceedingEntry.COLUMN_TITLE + " like ?";
-                    String[] whereArgsProceeding = {"%" + mProceedingFilter + "%", "%" + mProceedingFilter + "%"};
-
+                    baseUri = ProceedingsContract.ProceedingEntry.buildProceedingFilterUri(mProceedingFilter);
                     cursor = new CursorLoader(getActivity(), baseUri,
-                            PROCEEDINGS_LIST_PROJECTION, whereProceeding,
-                            whereArgsProceeding, null);
+                            null, null,null, null);
                     return cursor;
                 }
 

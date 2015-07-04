@@ -41,17 +41,6 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
     private Integer mProceedingId;
     private String mCategoryName;
 
-    // These are the Contacts rows that we will retrieve.
-    String[] PROCEEDING_DETAIL_PROJECTION = new String[] {
-            ProceedingsContract.ProceedingEntry._ID,
-            ProceedingsContract.ProceedingEntry.COLUMN_TITLE,
-            ProceedingsContract.ProceedingEntry.COLUMN_DESCRIPTION,
-            ProceedingsContract.ProceedingEntry.COLUMN_DEPENDS_ON,
-            ProceedingsContract.ProceedingEntry.COLUMN_LOCATION_OTHER_DATA,
-            ProceedingsContract.ProceedingEntry.COLUMN_REQUISITES,
-            ProceedingsContract.ProceedingEntry.COLUMN_URL,
-            ProceedingsContract.ProceedingEntry.COLUMN_STATUS };
-
     public ProceedingsDetailFragment() {
     }
 
@@ -118,12 +107,8 @@ public class ProceedingsDetailFragment extends android.support.v4.app.Fragment i
 
 
     public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
-        Uri baseUri = ProceedingsContract.ProceedingEntry.CONTENT_URI;
-        String whereProceeding = ProceedingsContract.ProceedingEntry._ID + " = ?";
-        String[] whereArgsProceeding = {mProceedingId.toString()};
-        return new CursorLoader(getActivity(), baseUri,
-                PROCEEDING_DETAIL_PROJECTION, whereProceeding, whereArgsProceeding, null);
-
+        Uri baseUri = ProceedingsContract.ProceedingEntry.buildProceedingUri(mProceedingId);
+        return new CursorLoader(getActivity(), baseUri,null, null, null, null);
     }
 
     @Override

@@ -54,15 +54,6 @@ public class MapActivity extends AppCompatActivity
         LocationListener {
 
     private static final int LOCATION_PROCEEDINGS = 0;
-    String[] LOCATION_PROCEEDING = new String[] {
-            ProceedingsContract.LocationEntry._ID,
-            ProceedingsContract.LocationEntry.COLUMN_IS_URUGUAY,
-            ProceedingsContract.LocationEntry.COLUMN_CITY,
-            ProceedingsContract.LocationEntry.COLUMN_STATE,
-            ProceedingsContract.LocationEntry.COLUMN_ADDRESS,
-            ProceedingsContract.LocationEntry.COLUMN_COMMENTS,
-            ProceedingsContract.LocationEntry.COLUMN_PHONE,
-            ProceedingsContract.LocationEntry.COLUMN_TIME};
 
     private Integer mProceedingId;
     private GoogleMap mMap;
@@ -137,11 +128,9 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Uri baseUri = ProceedingsContract.LocationEntry.CONTENT_URI;
-        String whereProceeding = ProceedingsContract.LocationEntry.COLUMN_PROC_KEY + " = ?";
-        String[] whereArgsProceeding = {mProceedingId.toString()};
+        Uri baseUri = ProceedingsContract.LocationEntry.buildLocationProceeding(mProceedingId);
         return new CursorLoader(this, baseUri,
-                LOCATION_PROCEEDING, whereProceeding, whereArgsProceeding, null);
+                null, null, null, null);
     }
 
     @Override

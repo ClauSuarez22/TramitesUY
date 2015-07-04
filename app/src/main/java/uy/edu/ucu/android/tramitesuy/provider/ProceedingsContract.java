@@ -28,6 +28,12 @@ public class ProceedingsContract {
     public static final String PATH_PROCEEDING = "proceeding";
     public static final String PATH_CATEGORY = "category";
     public static final String PATH_LOCATION = "location";
+    //proceeding/filter
+    public static final String PATH_PROCEEDING_FILTER = ProceedingsContract.PATH_PROCEEDING + "/filter";
+    //proceeding/ID/location
+    public static final String PATH_LOCATION_PROCEEDING_ID = ProceedingsContract.PATH_PROCEEDING + "/#/" + ProceedingsContract.PATH_LOCATION;
+    //cateegory/ID/proceeding
+    public static final String PATH_PROCEEDING_CATEGORY_ID = ProceedingsContract.PATH_CATEGORY + "/#/" + ProceedingsContract.PATH_PROCEEDING;
 
     // proceeding path
     public static final class ProceedingEntry implements BaseColumns{
@@ -57,15 +63,35 @@ public class ProceedingsContract {
         public static final String COLUMN_DEPENDS_ON = "depends_on";
         public static final String COLUMN_CAT_KEY = "category_id";
 
-        //Retorna la Uri que obtiene todos los proceeding
-        public static Uri buildAllProceedingUri() {
-            return CONTENT_URI;
-        }
-
         //Retorna la Uri que obtiene el detalle de un proceeding a partir de su ID
         public static Uri buildProceedingUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static long getProceedingFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
+        //Retorna la Uri que obtiene las proceeding asociadas a una category
+        // /category/categoryId/proceeding
+        public static Uri buildProceedingByCategoryUri(long categoryId) {
+            return CategoryEntry.buildCategoryUri(categoryId).buildUpon()
+                    .appendPath(PATH_PROCEEDING).build();
+        }
+
+        public static long getCategoryFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
+        public static Uri buildProceedingFilterUri(String filter){
+            return ProceedingEntry.CONTENT_URI.buildUpon()
+                    .appendPath("filter").appendPath(filter).build();
+        }
+
+        public static String getFilterFromUri(Uri uri){
+           return  uri.getLastPathSegment();
+        }
+
     }
 
     // category path
@@ -84,15 +110,15 @@ public class ProceedingsContract {
         public static final String COLUMN_CODE = "code";
         public static final String COLUMN_NAME = "name";
 
-        //Retorna la Uri que obtiene todas las Category
-        public static Uri buildAllCategoryUri() {
-            return CONTENT_URI;
-        }
-
         //Retorna la Uri que obtiene el detalle de una category a partir de su ID
         public static Uri buildCategoryUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
+
+        public static long getCategoryFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
+        }
+
     }
 
     // location path
@@ -118,14 +144,23 @@ public class ProceedingsContract {
         public static final String COLUMN_COMMENTS = "comments";
         public static final String COLUMN_PROC_KEY = "proceeding_id";
 
-        //Retorna la Uri que obtiene todas location
-        public static Uri buildAllLocationUri() {
-            return CONTENT_URI;
+        public static Uri buildLocationUri(long id) {
+            return ContentUris.withAppendedId(CONTENT_URI, id);
+        }
+
+        public static long getLocationFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
         }
 
         //Retorna la Uri que obtiene las location asociadas a un proceeding
+        // /proceeding/proceedingId/location
         public static Uri buildLocationProceeding(long proceedingId) {
-            return ContentUris.withAppendedId(Uri.withAppendedPath(CONTENT_URI, PATH_PROCEEDING), proceedingId);
+            return ProceedingEntry.buildProceedingUri(proceedingId).buildUpon()
+                    .appendPath(PATH_LOCATION).build();
+        }
+
+        public static long getProceedingFromUri(Uri uri) {
+            return Long.parseLong(uri.getPathSegments().get(1));
         }
     }
 
