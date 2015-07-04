@@ -57,7 +57,7 @@
                 style="@style/letterStyle"
                 android:textStyle="bold"
                 android:textSize="@dimen/letterSize"
-                android:text="Detalle"/>
+                android:text="¿Qué es?"/>
 
 
             <TextView
@@ -77,7 +77,7 @@
                 style="@style/letterStyle"
                 android:textStyle="bold"
                 android:textSize="@dimen/letterSize"
-                android:text="Organismo"/>
+                android:text="¿De quién depende?"/>
 
             <TextView
                 android:id="@+id/proceeding_depends_on"
@@ -89,6 +89,26 @@
                 android:text="Organismo del tramite"/>
 
             <TextView
+                android:id="@+id/proceeding_when_where_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/letterStyle"
+                android:textStyle="bold"
+                android:textSize="@dimen/letterSize"
+                android:text="¿Dónde y cuándo se realiza el trámite?"/>
+
+
+            <TextView
+                android:id="@+id/proceeding_when_where"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:textSize="@dimen/textSize"
+                android:text="Cuando y donde del tramite"/>
+
+            <TextView
                 android:id="@+id/proceeding_req_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -96,7 +116,7 @@
                 style="@style/letterStyle"
                 android:textStyle="bold"
                 android:textSize="@dimen/letterSize"
-                android:text="Requerimientos"/>
+                android:text="¿Qué se necesita para realizarlo?"/>
 
             <TextView
                 android:id="@+id/proceeding_req"
@@ -106,25 +126,6 @@
                 style="@style/letterStyle"
                 android:textSize="@dimen/textSize"
                 android:text="Requerimientos del tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_status_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="Estado"/>
-
-            <TextView
-                android:id="@+id/proceeding_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Estado del tramite"/>
 
             <TextView
                 android:id="@+id/proceeding_category_label"
@@ -147,24 +148,23 @@
                 android:text="Categoria del tramite"/>
 
             <TextView
-                android:id="@+id/proceeding_when_where_label"
+                android:id="@+id/proceeding_status_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/martin_top_details_title"
                 style="@style/letterStyle"
                 android:textStyle="bold"
                 android:textSize="@dimen/letterSize"
-                android:text="Cuándo y Dónde"/>
-
+                android:text="Estado"/>
 
             <TextView
-                android:id="@+id/proceeding_when_where"
+                android:id="@+id/proceeding_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5sp"
                 style="@style/letterStyle"
                 android:textSize="@dimen/textSize"
-                android:text="Cuando y donde del tramite"/>
+                android:text="Estado del tramite"/>
 
             <TextView
                 android:id="@+id/proceeding_url_label"
@@ -174,7 +174,7 @@
                 style="@style/letterStyle"
                 android:textStyle="bold"
                 android:textSize="@dimen/letterSize"
-                android:text="URL"/>
+                android:text="Vínculos de interés"/>
 
             <TextView
                 android:id="@+id/proceeding_url"
