@@ -2,13 +2,13 @@
 <resources>
     <!-- the theme applied to the application or activity -->
     <style name="CustomActionBarTheme"
-        parent="@android:style/Theme.Holo.Light.DarkActionBar">
+        parent="Theme.AppCompat.Light">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <!-- ActionBar styles -->
     <style name="MyActionBar"
-        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/teal</item>
     </style>
 

@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,7 +48,7 @@ import uy.edu.ucu.android.parser.model.Location;
 import uy.edu.ucu.android.tramitesuy.R;
 import uy.edu.ucu.android.tramitesuy.provider.ProceedingsContract;
 
-public class MapActivity extends FragmentActivity
+public class MapActivity extends AppCompatActivity
     implements OnMapReadyCallback,  LoaderManager.LoaderCallbacks<Cursor>,GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
@@ -78,6 +79,8 @@ public class MapActivity extends FragmentActivity
     private LocationRequest mLocationRequest;
     private boolean mRequestingLocationUpdates = false;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +90,7 @@ public class MapActivity extends FragmentActivity
                 .findFragmentById(R.id.locations_map);
         mapFragment.getMapAsync(this);
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("Sucursales");
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         if ( extras != null ) {
@@ -177,12 +178,30 @@ public class MapActivity extends FragmentActivity
     public void onConnected(Bundle bundle) {
         // Connected to Google Play services
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        mMarkerOption = new MarkerOptions()
-                .title("Posición Actual")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
-        updateLocation();
-        createLocationRequest();
+
+        if (mLastLocation != null) {
+            mMarkerOption = new MarkerOptions()
+                    .title("Posición Actual")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                    .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+            updateLocation();
+            createLocationRequest();
+        }else{
+            LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (android.location.LocationListener) this);
+                Log.d("Network", "Network");
+                if (locationManager != null) {
+                    mLastLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    mMarkerOption = new MarkerOptions()
+                            .title("Posición Actual")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+                            .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+                    updateLocation();
+                    //createLocationRequest();
+                }
+            }
+        }
     }
 
     protected LocationRequest createLocationRequest() {

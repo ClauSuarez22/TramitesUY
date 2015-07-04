@@ -3,12 +3,13 @@ package uy.edu.ucu.android.tramitesuy.controller;
 import android.app.ActionBar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import uy.edu.ucu.android.tramitesuy.R;
 
-public class ProceedingDetailActivity extends FragmentActivity {
+public class ProceedingDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,7 @@ public class ProceedingDetailActivity extends FragmentActivity {
                     .add(R.id.fragment_detail, ProceedingsDetailFragment.newInstance(extras.getInt("proceedingId"), extras.getString("categoryName")))
                     .commit();
         }
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 

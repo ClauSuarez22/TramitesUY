@@ -117,7 +117,7 @@ public class ProceedingsListFragment extends Fragment implements LoaderManager.L
         mSpinner = (Spinner) view.findViewById(R.id.spinner_categories);
         mListView = (ListView) view.findViewById(android.R.id.list);
         mCategoriesAdapter = new SimpleCursorAdapter(getActivity(),
-                android.R.layout.simple_spinner_item, null,
+                android.R.layout.simple_spinner_dropdown_item, null,
                 new String[] {
                         ProceedingsContract.CategoryEntry.COLUMN_NAME},
                 new int[] { android.R.id.text1 }, 0);

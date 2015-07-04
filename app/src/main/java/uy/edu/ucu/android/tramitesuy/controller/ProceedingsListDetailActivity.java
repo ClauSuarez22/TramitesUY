@@ -2,13 +2,14 @@ package uy.edu.ucu.android.tramitesuy.controller;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
 import uy.edu.ucu.android.tramitesuy.R;
 
-public class ProceedingsListDetailActivity extends FragmentActivity {
+public class ProceedingsListDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
