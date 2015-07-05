@@ -18,23 +18,147 @@
             android:paddingTop="@dimen/activity_vertical_margin"
             android:paddingBottom="@dimen/activity_vertical_margin">
 
+            <TextView
+                android:id="@+id/proceeding_name"
+                android:layout_width="match_parent"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                android:textStyle="bold"
+                style="@style/proceedingTitleStyle"
+                android:text="Titulo del tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_description_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="¿Qué es?"/>
+
+
+            <TextView
+                android:id="@+id/proceeding_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:text="Detalle de tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_depends_on_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="¿De quién depende?"/>
+
+            <TextView
+                android:id="@+id/proceeding_depends_on"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:text="Organismo del tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_when_where_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="¿Dónde y cuándo se realiza el trámite?"/>
+
+
+            <TextView
+                android:id="@+id/proceeding_when_where"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:text="Cuando y donde del tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_req_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="¿Qué se necesita para realizarlo?"/>
+
+            <TextView
+                android:id="@+id/proceeding_req"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:text="Requerimientos del tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_category_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="Categoría"/>
+
+
+            <TextView
+                android:id="@+id/proceeding_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:text="Categoria del tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_status_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="Estado"/>
+
+            <TextView
+                android:id="@+id/proceeding_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5sp"
+                style="@style/letterStyle"
+                android:text="Estado del tramite"/>
+
+            <TextView
+                android:id="@+id/proceeding_url_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/martin_top_details_title"
+                style="@style/titleStyle"
+                android:textStyle="bold"
+                android:text="Vínculos de interés"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5sp"
-                android:layout_weight="6"
+                android:layout_weight="4"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/proceeding_name"
+                    android:id="@+id/proceeding_url"
                     android:layout_width="0dp"
-                    android:layout_weight="3"
                     android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:autoLink="web"
                     android:layout_marginTop="5sp"
-                    android:textStyle="bold"
                     style="@style/letterStyle"
-                    android:textSize="@dimen/letterSize"
-                    android:text="Titulo del tramite"/>
+                    android:text="www.ejemplo.com.uy"/>
 
                 <Button
                     android:id="@+id/ver_mapa"
@@ -48,143 +172,6 @@
                     android:onClick="verMapa" />
 
             </LinearLayout>
-
-            <TextView
-                android:id="@+id/proceeding_description_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="¿Qué es?"/>
-
-
-            <TextView
-                android:id="@+id/proceeding_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Detalle de tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_depends_on_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="¿De quién depende?"/>
-
-            <TextView
-                android:id="@+id/proceeding_depends_on"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Organismo del tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_when_where_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="¿Dónde y cuándo se realiza el trámite?"/>
-
-
-            <TextView
-                android:id="@+id/proceeding_when_where"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Cuando y donde del tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_req_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="¿Qué se necesita para realizarlo?"/>
-
-            <TextView
-                android:id="@+id/proceeding_req"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Requerimientos del tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_category_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="Categoría"/>
-
-
-            <TextView
-                android:id="@+id/proceeding_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Categoria del tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_status_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="Estado"/>
-
-            <TextView
-                android:id="@+id/proceeding_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="Estado del tramite"/>
-
-            <TextView
-                android:id="@+id/proceeding_url_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/martin_top_details_title"
-                style="@style/letterStyle"
-                android:textStyle="bold"
-                android:textSize="@dimen/letterSize"
-                android:text="Vínculos de interés"/>
-
-            <TextView
-                android:id="@+id/proceeding_url"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:layout_marginTop="5sp"
-                style="@style/letterStyle"
-                android:textSize="@dimen/textSize"
-                android:text="www.ejemplo.com.uy"/>
 
         </LinearLayout>
     </ScrollView>
